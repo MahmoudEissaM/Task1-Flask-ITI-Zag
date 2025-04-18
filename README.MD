@@ -2,6 +2,9 @@
 
 This is a simple Flask web application that displays a list of companies and their details. The application uses an HTML template to render the data in a table format.
 
+## Screenshot
+![Companies List](screenshot.png)
+
 ## Features
 
 - Displays a list of companies with their name, location, description, and employee count.
@@ -55,4 +58,4 @@ When you visit the `/companies` route, you will see a table displaying the follo
 
 ## License
 
-This project is for educational purposes and does not include a specific license.
+This project is for educational purposes and does not include a specific license. 
