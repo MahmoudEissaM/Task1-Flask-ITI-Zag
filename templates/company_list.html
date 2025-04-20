@@ -16,6 +16,11 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .company-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         h1 {
             color: #333;
@@ -32,19 +37,92 @@
             font-weight: bold;
             color: #34495e;
         }
+        .add-company-btn {
+            display: inline-block;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            transition: background-color 0.2s;
+        }
+        .add-company-btn:hover {
+            background-color: #34495e;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .stats {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        .flash-message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .flash-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .flash-error {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .created-at {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
-    <h1>Companies List</h1>
-    {% for company in companies %}
-    <div class="company-card">
-        <h2>{{ company.name }}</h2>
-        <div class="company-info">
-            <p><span class="label">Location:</span> {{ company.location }}</p>
-            <p><span class="label">Description:</span> {{ company.description }}</p>
-            <p><span class="label">Employees Count:</span> {{ company.employees_count }}</p>
+    <div class="container">
+        <div class="header">
+            <h1>Companies Directory</h1>
+            <a href="/companies/new" class="add-company-btn">Add New Company</a>
         </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="stats">
+            Total Companies: {{ companies|length }}
+        </div>
+
+        {% for company in companies %}
+        <div class="company-card">
+            <h2>{{ company.name }}</h2>
+            <div class="company-info">
+                <p><span class="label">Location:</span> {{ company.location }}</p>
+                <p><span class="label">Description:</span> {{ company.description }}</p>
+                <p><span class="label">Employees Count:</span> {{ company.employees_count }}</p>
+                <p class="created-at">Added on: {{ company.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </body>
 </html>
